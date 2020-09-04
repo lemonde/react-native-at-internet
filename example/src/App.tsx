@@ -2,16 +2,40 @@ import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import AtInternet from 'react-native-at-internet';
 
-export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+AtInternet.EventEmitter.removeAllListeners(AtInternet.Events.sendDidEnd);
+AtInternet.EventEmitter.addListener(AtInternet.Events.buildDidEnd, (e) => {
+  console.log(e.message);
+});
 
+export default function App() {
   React.useEffect(() => {
-    AtInternet.multiply(3, 7).then(setResult);
+    (async () => {
+      await AtInternet.setConfigString('log', 'subdomainWithoutSSL');
+      await AtInternet.setConfigString('logSSL', 'subdomainWithSSL');
+      await AtInternet.setConfigBoolean('secure', true);
+      await AtInternet.setConfigString('domain', 'example.com');
+      await AtInternet.setConfigString('pixelPath', '/path/to/hit');
+      await AtInternet.setConfigInteger('site', 123456);
+      await AtInternet.setLevel2(1);
+      await AtInternet.setProp('x2', 'first custom param', true);
+      await AtInternet.setProp('x3', 'second custom param', true);
+      await AtInternet.setProp('x15', 'custom param (only next hit)', false);
+      await AtInternet.screen({
+        name: 'Page name',
+        chapter1: 'Chapter 1',
+        chapter2: 'Chapter 2',
+        chapter3: 'Chapter 3',
+        customObject: JSON.stringify({
+          custom: 'object',
+          with: { nested: 'properties' },
+        }),
+      });
+    })();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>Loaded</Text>
     </View>
   );
 }

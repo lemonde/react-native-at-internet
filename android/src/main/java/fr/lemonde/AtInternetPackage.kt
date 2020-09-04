@@ -1,13 +1,10 @@
-package com.reactnativeatinternet
-
-import java.util.Arrays
-import java.util.Collections
+package fr.lemonde
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
-import com.facebook.react.bridge.JavaScriptModule
+import java.util.Arrays
 
 class AtInternetPackage : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {

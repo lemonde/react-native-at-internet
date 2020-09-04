@@ -1,11 +1,33 @@
 # react-native-at-internet
 
-Implementation of AtInternet android &amp; ios packages
+Implementation of ATInternet android &amp; ios packages
 
-## Installation
+## Getting started
+
+### Disclaimer
+
+This is a simple and unofficial implementation of AtInternet SDK for [Android][1] and [iOS][2],
+it does not implement all methods nor functionalities of native modules,
+feel free to **open a pull request** and complete this.
+
+### Installation
 
 ```sh
 npm install react-native-at-internet
+```
+
+### Prerequisite (Android only)
+
+To be able to use AT Internet’s SDK, it is NECESSARY to add the following authorisations in your `AndroidManifest` file, just before <application> tag:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.example">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    ...
+</manifest>
 ```
 
 ## Usage
@@ -15,8 +37,19 @@ import AtInternet from "react-native-at-internet";
 
 // ...
 
-const result = await AtInternet.multiply(3, 7);
+await AtInternet.screen({
+    name: 'Page name',
+    chapter1: 'Chapter 1',
+    chapter2: 'Chapter 2',
+    chapter3: 'Chapter 3',
+    customObject: JSON.stringify({
+        custom: 'object',
+        with: { nested: 'properties' },
+    }),
+});
 ```
+
+For further documentation see the [implementations](docs/IMPLEMENTATIONS.md).
 
 ## Contributing
 
@@ -25,3 +58,6 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
+
+[1]: https://developers.atinternet-solutions.com/android-en/getting-started-android-en/operating-principle-android-en/
+[2]: https://developers.atinternet-solutions.com/apple-universal-en/getting-started-apple-universal-en/operating-principle-apple-universal-en/
