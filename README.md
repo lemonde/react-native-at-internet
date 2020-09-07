@@ -1,6 +1,6 @@
 # react-native-at-internet
 
-Implementation of ATInternet android &amp; ios packages
+Implementation of ATInternet Android & iOS packages
 
 ## Getting started
 
@@ -13,7 +13,7 @@ feel free to **open a pull request** and complete this.
 ### Installation
 
 ```sh
-npm install react-native-at-internet
+npm install @lemonde/react-native-at-internet
 ```
 
 ### Prerequisite (Android only)
@@ -33,7 +33,7 @@ To be able to use AT Internet’s SDK, it is NECESSARY to add the following auth
 ## Usage
 
 ```js
-import AtInternet from "react-native-at-internet";
+import AtInternet from "@lemonde/react-native-at-internet";
 
 // ...
 
@@ -49,7 +49,7 @@ await AtInternet.screen({
 });
 ```
 
-For further documentation see the [implementations](docs/IMPLEMENTATIONS.md).
+For further documentation see the [implementations](docs/IMPLEMENTATIONS.md) and the [getting started](docs/GETTING-STARTED.md).
 
 ## Contributing
 
