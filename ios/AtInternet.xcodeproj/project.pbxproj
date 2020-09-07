@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-
-		5E555C0D2413F4C50049A1A2 /* AtInternet.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* AtInternet.mm */; };
+		F4FF95D7245B92E800C19C63 /* AtInternet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* AtInternet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,11 +24,9 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libAtInternet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAtInternet.a; sourceTree = BUILT_PRODUCTS_DIR; };
-
-
-		B3E7B5881CC2AC0600A0062D /* AtInternet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtInternet.h; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* AtInternet.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AtInternet.mm; sourceTree = "<group>"; };
-
+		B3E7B5891CC2AC0600A0062D /* AtInternet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtInternet.m; sourceTree = "<group>"; };
+		F4FF95D5245B92E700C19C63 /* AtInternet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AtInternet-Bridging-Header.h"; sourceTree = "<group>"; };
+		F4FF95D6245B92E800C19C63 /* AtInternet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtInternet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +51,9 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-
-
-				B3E7B5881CC2AC0600A0062D /* AtInternet.h */,
-				B3E7B5891CC2AC0600A0062D /* AtInternet.mm */,
-
+				F4FF95D6245B92E800C19C63 /* AtInternet.swift */,
+				B3E7B5891CC2AC0600A0062D /* AtInternet.m */,
+				F4FF95D5245B92E700C19C63 /* AtInternet-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -121,10 +115,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
-
-				5E555C0D2413F4C50049A1A2 /* AtInternet.mm in Sources */,
-
+				F4FF95D7245B92E800C19C63 /* AtInternet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +169,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -220,6 +212,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -237,7 +230,9 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = AtInternet;
 				SKIP_INSTALL = YES;
-
+				SWIFT_OBJC_BRIDGING_HEADER = "AtInternet-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -254,7 +249,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = AtInternet;
 				SKIP_INSTALL = YES;
-
+				SWIFT_OBJC_BRIDGING_HEADER = "AtInternet-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

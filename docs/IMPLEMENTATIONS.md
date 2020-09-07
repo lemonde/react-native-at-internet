@@ -1,13 +1,16 @@
 # Implementations
 
-When using `import AtInternet from "react-native-at-internet"`.
+When using `import AtInternet from "@lemonde/react-native-at-internet"`.
 
 ## `AtInternet` type declaration :
 
 ### Members
 
-* **EventEmitter**: *NativeEventEmitter* (see [Android doc](https://reactnative.dev/docs/native-modules-android#sending-events-to-javascript) and [iOS doc](https://reactnative.dev/docs/native-modules-ios#sending-events-to-javascript))
-* **Events**: *enum*
+#### **EventEmitter**
+
+*NativeEventEmitter* (see [Android doc](https://reactnative.dev/docs/native-modules-android#sending-events-to-javascript) and [iOS doc](https://reactnative.dev/docs/native-modules-ios#sending-events-to-javascript))
+
+#### **Events**: *enum*
   * `buildDidEnd`
   * `didCallPartner`
   * `errorDidOccur`
@@ -30,6 +33,11 @@ When using `import AtInternet from "react-native-at-internet"`.
 * **setParamInteger**(`key`: string, `value`: number | null): *Promise‹true›*
 * **setParamString**(`key`: string, `value`: string | null): *Promise‹true›*
 * **setProp**(`key`: string, `value`: string, `persistent`: boolean): *Promise‹true›*
+
+##### iOS only
+
+* **enableListeners**(): *Promise‹true›*: enable [Event](#EventEmitter) emitting
+* **disableListeners**(): *Promise‹true›*: disable [Event](#EventEmitter) emitting
 
 #### Hits
 
@@ -55,3 +63,39 @@ When using `import AtInternet from "react-native-at-internet"`.
   * `optional` customObject: string (*must be a object JSON string representation, eg.: return value of* `JSON.stringify({ my: 'custom object' })`)
   * `optional` level2: string
 
+## Events Interfaces
+
+* trackerNeedsFirstLaunchApproval
+  ```typescript
+  { message: string }
+  ```
+
+* buildDidEnd
+  ```typescript
+  { message: string, status: number }
+  ```
+
+* sendDidEnd
+  ```typescript
+  { message: string, status: number }
+  ```
+
+* didCallPartner
+  ```typescript
+  { response: string }
+  ```
+
+* warningDidOccur
+  ```typescript
+  { message: string }
+  ```
+
+* saveDidEnd
+  ```typescript
+  { message: string }
+  ```
+
+* errorDidOccur
+  ```typescript
+  { message: string }
+  ```

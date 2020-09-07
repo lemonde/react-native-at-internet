@@ -236,6 +236,16 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
         return gesture
     }
 
+    @ReactMethod
+    fun enableListeners(promise: Promise) {
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun disableListeners(promise: Promise) {
+        promise.resolve(true)
+    }
+
     private fun sendEvent(eventName: String, @Nullable params: WritableMap) {
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
