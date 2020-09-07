@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import AtInternet from 'react-native-at-internet';
+import AtInternet from '@lemonde/react-native-at-internet';
 
+AtInternet.enableListeners();
 AtInternet.EventEmitter.removeAllListeners(AtInternet.Events.sendDidEnd);
 AtInternet.EventEmitter.addListener(AtInternet.Events.buildDidEnd, (e) => {
   console.log(e.message);
