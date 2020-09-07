@@ -1,5 +1,5 @@
 {
-  "name": "react-native-at-internet",
+  "name": "@lemonde/react-native-at-internet",
   "version": "0.1.0",
   "description": "Implementation of AtInternet android &amp; ios packages",
   "main": "lib/commonjs/index",
@@ -65,6 +65,9 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
   },
   "jest": {
     "preset": "react-native",
