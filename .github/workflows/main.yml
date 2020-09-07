@@ -1,0 +1,53 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  install-and-test:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          yarn install
+      - name: Run tests
+        run: |
+          yarn test
+  build-android:
+    needs: install-and-test
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          yarn bootstrap
+      - name: Build Android Module
+        run: |
+          mkdir $PWD/example/android/app/src/main/assets/
+          yarn example react-native bundle \
+            --platform android \
+            --dev false \
+            --entry-file index.tsx \
+            --bundle-output $PWD/example/android/app/src/main/assets/index.android.bundle \
+            --assets-dest $PWD/example/android/app/src/main/res/
+          cd $PWD/example/android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets
+  build-ios:
+    needs: install-and-test
+    runs-on: macos-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          yarn bootstrap
+      - name: Build iOS Module
+        run: |
+          yarn example ios
