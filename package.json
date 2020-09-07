@@ -1,6 +1,6 @@
 {
   "name": "@lemonde/react-native-at-internet",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.0",
   "description": "Implementation of AtInternet android &amp; ios packages",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -67,7 +67,7 @@
     "react-native": "*"
   },
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/"
   },
   "jest": {
     "preset": "react-native",
@@ -122,7 +122,10 @@
       ]
     }
   },
-  "eslintIgnore": ["node_modules/", "lib/"],
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
   "prettier": {
     "quoteProps": "consistent",
     "singleQuote": true,
@@ -133,6 +136,10 @@
   "@react-native-community/bob": {
     "source": "src",
     "output": "lib",
-    "targets": ["commonjs", "module", "typescript"]
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
   }
 }
