@@ -8,6 +8,12 @@ enum AtInternetError: Error {
 class AtInternet: RCTEventEmitter, TrackerDelegate {
     let tracker = ATInternet.sharedInstance.defaultTracker
 
+    // MARK: RCTBridgeModule
+    @objc override static func requiresMainQueueSetup() -> Bool {
+        return true
+    }
+    // MARK: Bridged methods
+
     override func supportedEvents() -> [String]! {
         [
             "trackerNeedsFirstLaunchApproval",
