@@ -65,8 +65,10 @@ RCT_EXTERN_METHOD(visitor:(NSString)visitorId
 RCT_EXTERN_METHOD(unsetVisitor:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(enableListeners:(RCTPromiseResolveBlock)resolve)
+RCT_EXTERN_METHOD(enableListeners:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(disableListeners:(RCTPromiseResolveBlock)resolve)
+RCT_EXTERN_METHOD(disableListeners:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
 
 @end

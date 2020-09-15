@@ -275,14 +275,14 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         resolve(true)
     }
 
-    @objc(enableListeners:)
-    func enableListeners(resolve: RCTPromiseResolveBlock) {
+    @objc(enableListeners:withRejecter:)
+    func enableListeners(resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         tracker.delegate = self
         resolve(true)
     }
 
-    @objc(disableListeners:)
-    func disableListeners(resolve: RCTPromiseResolveBlock) {
+    @objc(disableListeners:withRejecter:)
+    func disableListeners(resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         tracker.delegate = nil
         resolve(true)
     }
