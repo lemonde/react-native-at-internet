@@ -67,6 +67,9 @@
     "react": "*",
     "react-native": "*"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
