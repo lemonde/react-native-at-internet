@@ -23,10 +23,6 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
 
     private val tracker: Tracker = ATInternet.getInstance().defaultTracker
 
-    init {
-        tracker.listener = this
-    }
-
     override fun getName(): String {
         return "AtInternet"
     }
@@ -238,11 +234,13 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
 
     @ReactMethod
     fun enableListeners(promise: Promise) {
+        tracker.listener = this
         promise.resolve(true)
     }
 
     @ReactMethod
     fun disableListeners(promise: Promise) {
+        tracker.setDefaultListener()
         promise.resolve(true)
     }
 
