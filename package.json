@@ -1,6 +1,6 @@
 {
   "name": "@lemonde/react-native-at-internet",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "Implementation of AtInternet android &amp; ios packages",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
