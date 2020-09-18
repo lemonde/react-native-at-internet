@@ -1,6 +1,16 @@
+<div align="center">
+
 # react-native-at-internet
 
+[![GitHub license](https://img.shields.io/github/license/lemonde/react-native-at-internet)](https://github.com/lemonde/react-native-at-internet/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/lemonde/react-native-at-internet)](https://github.com/lemonde/react-native-at-internet/stargazers)
+![Travis (.com)](https://img.shields.io/travis/com/lemonde/react-native-at-internet)
+![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=lemonde.react-native-at-internet)
+
 Implementation of ATInternet Android & iOS packages
+
+</div>
+
 
 ## Getting started
 
