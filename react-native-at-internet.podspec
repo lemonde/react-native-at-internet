@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "9.0" }
+  s.platforms    = { :ios => "10.0" }
   s.source       = { :git => "https://github.com/lemonde/react-native-at-internet.git", :tag => "#{s.version}" }
 
   
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   
 
   s.dependency "React"
-  s.dependency "ATInternet-Apple-SDK/Tracker",">=2.0"
+  s.dependency "ATInternet-Apple-SDK/Tracker",">=2.22.0"
 end

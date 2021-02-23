@@ -1,5 +1,5 @@
 PODS:
-  - ATInternet-Apple-SDK/Tracker (2.18.0)
+  - ATInternet-Apple-SDK/Tracker (2.22.3)
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.4)
   - CocoaLibEvent (1.0.0)
@@ -234,8 +234,8 @@ PODS:
     - React-cxxreact (= 0.62.2)
     - React-jsi (= 0.62.2)
   - React-jsinspector (0.62.2)
-  - react-native-at-internet (1.0.0):
-    - ATInternet-Apple-SDK/Tracker (>= 2.0)
+  - react-native-at-internet (1.0.1):
+    - ATInternet-Apple-SDK/Tracker (>= 2.22.0)
     - React
   - React-RCTActionSheet (0.62.2):
     - React-Core/RCTActionSheetHeaders (= 0.62.2)
@@ -407,7 +407,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  ATInternet-Apple-SDK: 48ae057f5fe2d16a8c7b9477775176e91b4a4265
+  ATInternet-Apple-SDK: 2591b7cbac1e1701ceb427788551f219658e288c
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
@@ -433,7 +433,7 @@ SPEC CHECKSUMS:
   React-jsi: b6dc94a6a12ff98e8877287a0b7620d365201161
   React-jsiexecutor: 1540d1c01bb493ae3124ed83351b1b6a155db7da
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
-  react-native-at-internet: 444862a435a329c9a07a6b5502eb95135ddef32e
+  react-native-at-internet: 0bf0510ca6ddbd85c3e69fdf5cf9b2dd4c139d80
   React-RCTActionSheet: f41ea8a811aac770e0cc6e0ad6b270c644ea8b7c
   React-RCTAnimation: 49ab98b1c1ff4445148b72a3d61554138565bad0
   React-RCTBlob: a332773f0ebc413a0ce85942a55b064471587a71
@@ -447,6 +447,6 @@ SPEC CHECKSUMS:
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 789394d2c79d8d30007c72fa652116a33509d3cb
+PODFILE CHECKSUM: 0c58ae6c9e845ff31d5f778d5af186c218b0affc
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1
