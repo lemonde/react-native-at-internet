@@ -142,5 +142,6 @@
       "module",
       "typescript"
     ]
-  }
+  },
+  "dependencies": {}
 }

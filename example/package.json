@@ -11,6 +11,7 @@
     "android:log-full": "adb logcat --pid=$(adb shell pidof com.example.reactnativeatinternet)"
   },
   "dependencies": {
+    "@react-native-picker/picker": "^1.14.0",
     "react": "16.11.0",
     "react-native": "0.62.2"
   },

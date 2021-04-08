@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   
 
   s.dependency "React"
-  s.dependency "ATInternet-Apple-SDK/Tracker",">=2.22.0"
+  s.dependency "ATInternet-Apple-SDK/Tracker","2.23.0"
 end

@@ -71,4 +71,28 @@ RCT_EXTERN_METHOD(enableListeners:(RCTPromiseResolveBlock)resolve
 RCT_EXTERN_METHOD(disableListeners:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(setPrivacyVisitorOptout:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(setPrivacyVisitorOptin:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(setPrivacyVisitorMode:(NSString)mode
+                  withParameters:(NSDictionary)parameters
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(getPrivacyVisitorMode:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(extendIncludeBuffer:(NSString)mode
+                  withKeys:(NSArray)keys
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(extendIncludeStorage:(NSString)mode
+                  withFeatures:(NSArray)features
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
 @end

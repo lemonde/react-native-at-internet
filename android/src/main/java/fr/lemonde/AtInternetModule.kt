@@ -9,6 +9,7 @@ import com.atinternet.tracker.Screen
 import com.atinternet.tracker.SetConfigCallback
 import com.atinternet.tracker.Tracker
 import com.atinternet.tracker.TrackerListener
+import com.atinternet.tracker.Privacy
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Dynamic
 import com.facebook.react.bridge.Promise
@@ -204,6 +205,95 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
         } catch (e: Throwable) {
             promise.reject(e)
         }
+    }
+
+    @ReactMethod
+    fun setPrivacyVisitorOptout(promise: Promise) {
+        Privacy.setVisitorOptOut()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun setPrivacyVisitorOptin(promise: Promise) {
+        Privacy.setVisitorOptIn()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun setPrivacyVisitorMode(mode: String, parameters: ReadableMap, promise: Promise) {
+        var visitorMode: Privacy.VisitorMode? = null
+
+        when (mode) {
+            "OptIn" -> visitorMode = Privacy.VisitorMode.OptIn
+            "OptOut" -> visitorMode = Privacy.VisitorMode.OptOut
+            "Exempt" -> visitorMode = Privacy.VisitorMode.Exempt
+            "NoConsent" -> visitorMode = Privacy.VisitorMode.NoConsent
+            "None" -> visitorMode = Privacy.VisitorMode.None
+            else -> {
+                promise.reject("INVALID_PRIVACY_MODE", "Invalid privacy mode $mode (could be OptIn, OptOut, Exempt, NoConsent or None)")
+                return
+            }
+        }
+
+        val hasDuration = parameters.hasKey("duration")
+        val hasConsent = parameters.hasKey("visitorConsent")
+        val hasCustomUserId = parameters.hasKey("customUserIdValue")
+
+        if (hasConsent && hasCustomUserId && hasDuration) {
+            Privacy.setVisitorMode(
+                mode,
+                parameters.getBoolean("visitorConsent"),
+                parameters.getString("customUserIdValue"),
+                parameters.getInt("duration")
+            )
+        } else if (hasConsent && hasCustomUserId) {
+            Privacy.setVisitorMode(
+                mode,
+                parameters.getBoolean("visitorConsent"),
+                parameters.getString("customUserIdValue")
+            )
+        } else if (hasDuration) {
+            Privacy.setVisitorMode(
+                visitorMode,
+                parameters.getInt("duration")
+            )
+        } else {
+            Privacy.setVisitorMode(
+                visitorMode
+            )
+        }
+
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun getPrivacyVisitorMode(promise: Promise) {
+        promise.resolve(Privacy.getVisitorModeString())
+    }
+
+    @ReactMethod
+    fun extendIncludeBuffer(visitorMode: String, keys: Array<String>, promise: Promise) {
+        Privacy.extendIncludeBufferForVisitorMode(visitorMode, *keys)
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun extendIncludeStorage(visitorMode: String, features: Array<String>, promise: Promise) {
+        val privacyFeatures: List<Privacy.StorageFeature> = ArrayList()
+
+        features.forEach {
+            when (it) {
+                "Campaign" -> privacyFeatures.plus(Privacy.StorageFeature.Campaign)
+                "Crash" -> privacyFeatures.plus(Privacy.StorageFeature.Crash)
+                "IdentifiedVisitor" -> privacyFeatures.plus(Privacy.StorageFeature.IdentifiedVisitor)
+                "Lifecycle" -> privacyFeatures.plus(Privacy.StorageFeature.Lifecycle)
+                "Privacy" -> privacyFeatures.plus(Privacy.StorageFeature.Privacy)
+                "UserId" -> privacyFeatures.plus(Privacy.StorageFeature.UserId)
+            }
+        }
+
+        Privacy.extendIncludeStorageForVisitorMode(visitorMode, *privacyFeatures.toTypedArray())
+        promise.resolve(true)
     }
 
     fun gesture(parameters: ReadableMap): Gesture {

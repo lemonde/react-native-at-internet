@@ -162,6 +162,91 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         resolve(true)
     }
 
+    @objc(setPrivacyVisitorOptout:withRejecter:)
+    func setPrivacyVisitorOptout(
+            resolve: RCTPromiseResolveBlock,
+            reject: RCTPromiseRejectBlock
+    ) {
+        Privacy.setVisitorOptOut();
+        resolve(true)
+    }
+    
+    @objc(setPrivacyVisitorOptin:withRejecter:)
+    func setPrivacyVisitorOptin(
+            resolve: RCTPromiseResolveBlock,
+            reject: RCTPromiseRejectBlock
+    ) {
+        Privacy.setVisitorOptIn();
+        resolve(true)
+    }
+    
+    @objc(setPrivacyVisitorMode:withParameters:withResolver:withRejecter:)
+    func setPrivacyVisitorMode(
+            mode: String,
+            parameters: [String: Any],
+            resolve: RCTPromiseResolveBlock,
+            reject: RCTPromiseRejectBlock
+    ) {
+        let hasDuration = parameters.index(forKey: "duration") != nil;
+        let hasConsent = parameters.index(forKey: "visitorConsent") != nil;
+        let hasCustomUserId = parameters.index(forKey: "customUserIdValue") != nil;
+
+        if (hasConsent && hasCustomUserId && hasDuration) {
+            Privacy.setVisitorMode(
+                mode,
+                visitorConsent: parameters["visitorConsent"] as! Bool,
+                customUserId: parameters["customUserIdValue"] as! String?,
+                duration: parameters["duration"] as! Int
+            )
+        } else if (hasConsent && hasCustomUserId) {
+            Privacy.setVisitorMode(
+                mode,
+                visitorConsent: parameters["visitorConsent"] as! Bool,
+                customUserId: parameters["customUserIdValue"] as! String?
+            )
+        } else if (hasDuration) {
+            Privacy.setVisitorMode(
+                mode,
+                duration: parameters["duration"] as! Int
+            )
+        } else {
+            Privacy.setVisitorMode(mode);
+        }
+        
+        resolve(true)
+    }
+    
+    @objc(getPrivacyVisitorMode:withRejecter:)
+    func getPrivacyVisitorMode(
+            resolve: RCTPromiseResolveBlock,
+            reject: RCTPromiseRejectBlock
+    ) {
+        print(Privacy.getVisitorModeString())
+        resolve(Privacy.getVisitorModeString())
+    }
+    
+    @objc(extendIncludeBuffer:withKeys:withResolver:withRejecter:)
+    func extendIncludeBuffer(
+            mode: String,
+            keys: [String],
+            resolve: RCTPromiseResolveBlock,
+            reject: RCTPromiseRejectBlock
+    ) {
+        Privacy.extendIncludeBuffer(mode, keys: keys)
+        resolve(true)
+    }
+    
+    @objc(extendIncludeStorage:withFeatures:withResolver:withRejecter:)
+    func extendIncludeStorage(
+            mode: String,
+            features: [String],
+            resolve: RCTPromiseResolveBlock,
+            reject: RCTPromiseRejectBlock
+    ) {
+        Privacy.extendIncludeStorage(mode, storageFeatureKeys: features);
+        resolve(true)
+    }
+
     func gesture(parameters: [String: Any]) throws -> Gesture {
         if parameters["name"] == nil {
             throw AtInternetError.missingMandatoryField(field: "name")
