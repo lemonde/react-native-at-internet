@@ -3,6 +3,7 @@ cache: yarn
 jobs:
   allow_failures:
     - os: linux
+    - os: osx
   include:
     - name: 'Build iOS'
       os: osx
@@ -10,7 +11,7 @@ jobs:
       osx_image: xcode12
       xcode_project: example/ios/magazine.xcodeproj
       xcode_scheme: AtInternetExample
-      xcode_destination: platform=iOS Simulator,OS=11.2,name=iPhone 7
+      xcode_destination: platform=iOS Simulator,OS=14.1,name=iPhone X
       env:
         - NODE_VERSION="node"
       before_install:
@@ -20,16 +21,16 @@ jobs:
         - yarn bootstrap
         - yarn test
         - yarn example ios
-    
+
     - name: 'Build Android'
       language: generic
       dist: trusty
       os:
         - linux
       env:
-        - NODE_VERSION="node" 
-        - SYS=23
-        - ABI="google_apis;armeabi-v7a"
+        - NODE_VERSION="node"
+        - SYS=28
+        - ABI="default;x86_64"
       before_install:
         - nvm install $NODE_VERSION
         - npm install --global yarn
@@ -54,10 +55,10 @@ jobs:
         - sdkmanager --list
         - echo no | avdmanager create avd --force -n test -k "system-images;android-$SYS;$ABI"
         # use the absolute emulator path in case older version installed (on default path)
-        - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
+        - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
       before_script:
-        - ./scripts/android-wait-for-emulator.sh
-        - adb shell input keyevent 82
+        - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
+        - adb shell input keyevent 82 &
       script:
         - yarn bootstrap
         - yarn test
