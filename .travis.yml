@@ -29,8 +29,8 @@ jobs:
         - linux
       env:
         - NODE_VERSION="node"
-        - SYS=28
-        - ABI="default;x86_64"
+        - SYS=24
+        - ABI="default;armeabi-v7a"
       before_install:
         - nvm install $NODE_VERSION
         - npm install --global yarn
