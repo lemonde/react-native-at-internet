@@ -272,24 +272,32 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
     }
 
     @ReactMethod
-    fun extendIncludeBuffer(visitorMode: String, keys: Array<String>, promise: Promise) {
+    fun extendIncludeBuffer(visitorMode: String, keysDynamic: Dynamic, promise: Promise) {
+        val keys = Array(keysDynamic.asArray().size()) {
+            i -> keysDynamic.asArray().getString(i).toString()
+        }
+
         Privacy.extendIncludeBufferForVisitorMode(visitorMode, *keys)
         promise.resolve(true)
     }
 
     @ReactMethod
-    fun extendIncludeStorage(visitorMode: String, features: Array<String>, promise: Promise) {
-        val privacyFeatures: List<Privacy.StorageFeature> = ArrayList()
+    fun extendIncludeStorage(visitorMode: String, featuresDynamic: Dynamic, promise: Promise) {
+        var i = 0
+        val privacyFeatures = ArrayList<Privacy.StorageFeature>()
 
-        features.forEach {
-            when (it) {
-                "Campaign" -> privacyFeatures.plus(Privacy.StorageFeature.Campaign)
-                "Crash" -> privacyFeatures.plus(Privacy.StorageFeature.Crash)
-                "IdentifiedVisitor" -> privacyFeatures.plus(Privacy.StorageFeature.IdentifiedVisitor)
-                "Lifecycle" -> privacyFeatures.plus(Privacy.StorageFeature.Lifecycle)
-                "Privacy" -> privacyFeatures.plus(Privacy.StorageFeature.Privacy)
-                "UserId" -> privacyFeatures.plus(Privacy.StorageFeature.UserId)
+        while (i < featuresDynamic.asArray().size()) {
+            val value = featuresDynamic.asArray().getString(i)
+
+            when (value) {
+                "Campaign" -> privacyFeatures.add(Privacy.StorageFeature.Campaign)
+                "Crash" -> privacyFeatures.add(Privacy.StorageFeature.Crash)
+                "IdentifiedVisitor" -> privacyFeatures.add(Privacy.StorageFeature.IdentifiedVisitor)
+                "Lifecycle" -> privacyFeatures.add(Privacy.StorageFeature.Lifecycle)
+                "Privacy" -> privacyFeatures.add(Privacy.StorageFeature.Privacy)
+                "UserId" -> privacyFeatures.add(Privacy.StorageFeature.UserId)
             }
+            i++
         }
 
         Privacy.extendIncludeStorageForVisitorMode(visitorMode, *privacyFeatures.toTypedArray())

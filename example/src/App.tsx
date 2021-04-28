@@ -25,6 +25,17 @@ export default function App() {
 
   React.useEffect(() => {
     (async () => {
+      await AtInternet.Privacy.extendIncludeBuffer(
+        'Exempt',
+        'stc/device',
+        'ati',
+        'atc'
+      );
+      await AtInternet.Privacy.extendIncludeStorage(
+        'OptOut',
+        'Campaign',
+        'Crash'
+      );
       setVisitorMode(await AtInternet.Privacy.getVisitorMode());
       // https://webhook.site/#!/96f68232-3178-42ec-a9a7-9f8d1aabee62
       await AtInternet.setConfigString('log', 'www');

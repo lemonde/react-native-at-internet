@@ -221,7 +221,6 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
             resolve: RCTPromiseResolveBlock,
             reject: RCTPromiseRejectBlock
     ) {
-        print(Privacy.getVisitorModeString())
         resolve(Privacy.getVisitorModeString())
     }
     

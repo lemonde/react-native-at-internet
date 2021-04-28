@@ -4,6 +4,7 @@ import {
   EmitterSubscription,
   NativeModulesStatic,
   EventSubscriptionVendor,
+  Platform,
 } from 'react-native';
 
 interface HitParameters {
@@ -124,9 +125,12 @@ type AtInternetType = {
         }
   ): Promise<true>;
   getPrivacyVisitorMode(): Promise<PrivacyVisitorMode>;
-  extendIncludeBuffer(mode: string, keys: string[]): Promise<true>;
+  extendIncludeBuffer(
+    mode: PrivacyVisitorMode | string,
+    keys: string[]
+  ): Promise<true>;
   extendIncludeStorage(
-    mode: string,
+    mode: PrivacyVisitorMode | string,
     feature: PrivacyStorageFeature[]
   ): Promise<true>;
 
@@ -164,6 +168,14 @@ const { AtInternet } = NativeModules as NativeModulesStatic & {
   AtInternet: AtInternetType & EventSubscriptionVendor;
 };
 
+const sanitizeIOSMode = (string: string) => {
+  if (Platform.OS === 'ios') {
+    return `${string.charAt(0).toLowerCase()}${string.slice(1)}`;
+  } else {
+    return string;
+  }
+};
+
 const Module = AtInternet as Omit<
   AtInternetType,
   | 'setPrivacyVisitorOptout'
@@ -180,13 +192,21 @@ Module.Privacy = {
   StorageFeature: ePrivacyStorageFeature,
   setVisitorOptout: AtInternet.setPrivacyVisitorOptout,
   setVisitorOptIn: AtInternet.setPrivacyVisitorOptin,
-  extendIncludeBuffer: (mode, ...keys) =>
-    AtInternet.extendIncludeBuffer(mode, keys),
-  extendIncludeStorage: (mode, ...features) =>
-    AtInternet.extendIncludeStorage(mode, features),
+  extendIncludeBuffer: (mode: PrivacyVisitorMode, ...keys) =>
+    AtInternet.extendIncludeBuffer(
+      sanitizeIOSMode(mode),
+      keys.map(sanitizeIOSMode)
+    ),
+  extendIncludeStorage: (
+    mode: PrivacyVisitorMode,
+    ...features: PrivacyStorageFeature[]
+  ) =>
+    AtInternet.extendIncludeStorage(
+      sanitizeIOSMode(mode),
+      features.map(sanitizeIOSMode) as PrivacyStorageFeature[]
+    ),
   getVisitorMode: async () => {
     const mode = await AtInternet.getPrivacyVisitorMode();
-    console.log(mode);
     return (mode.charAt(0).toUpperCase() + mode.slice(1)) as PrivacyVisitorMode;
   },
   setVisitorMode: (mode, parameters = {}) =>
