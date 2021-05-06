@@ -245,6 +245,129 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         Privacy.extendIncludeStorage(mode, storageFeatureKeys: features);
         resolve(true)
     }
+    
+    @objc(salesProductsDisplay:withResolver:withRejecter:)
+    func salesProductsDisplay(products: [[String: Any]], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let dp: DisplayProduct = self.tracker.ecommerce.displayProducts.add()
+        
+        for product in products {
+            let eCommerceProduct = ECommerceProduct(obj:product)
+            dp.products.append(eCommerceProduct)
+        }
+        
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesProductsDisplayPage:withResolver:withRejecter:)
+    func salesProductsDisplayPage(product: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let dpp: DisplayPageProduct = self.tracker.ecommerce.displayPageProducts.add()
+        _ = dpp.product = ECommerceProduct(obj: product)
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesProductsAdd:withProduct:withResolver:withRejecter:)
+    func salesProductsAdd(cart: [String: Any], product: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let ap: AddProduct = self.tracker.ecommerce.addProducts.add()
+        _ = ap.cart.set(key: "id", value: String(describing: cart["id"]))
+        _ = ap.product = ECommerceProduct(obj: product)
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesProductsRemove:withProduct:withResolver:withRejecter:)
+    func salesProductsRemove(cart: [String: Any], product: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let rp: RemoveProduct = self.tracker.ecommerce.removeProducts.add()
+        _ = rp.cart.set(key: "id", value: String(describing: cart["id"]))
+        _ = rp.product = ECommerceProduct(obj: product)
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesCartDisplay:withResolver:withRejecter:)
+    func salesCartDisplay(cart: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let dc: DisplayCart = self.tracker.ecommerce.displayCarts.add()
+        _ = dc.cart.setProps(obj: cart)
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesCartUpdate:withResolver:withRejecter:)
+    func salesCartUpdate(cart: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let uc: UpdateCart = self.tracker.ecommerce.updateCarts.add()
+        _ = uc.cart.setProps(obj: cart)
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesCartDelivery:withShipping:withResolver:withRejecter:)
+    func salesCartDelivery(cart: [String: Any], shipping: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let dc: DeliveryCheckout = self.tracker.ecommerce.deliveryCheckouts.add()
+        _ = dc.cart.setProps(obj: cart)
+        _ = dc.shipping.setProps(obj: shipping)
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesCartPayment:withShipping:withResolver:withRejecter:)
+    func salesCartPayment(cart: [String: Any], shipping: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let pc: PaymentCheckout = self.tracker.ecommerce.paymentCheckouts.add()
+        _ = pc.cart.setProps(obj: cart)
+        _ = pc.shipping.setProps(obj: shipping)
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesCartAwaitingPayments:withShipping:withPayment:withTransaction:withProducts:withResolver:withRejecter:)
+    func salesCartAwaitingPayments(
+        cart: [String: Any],
+        shipping: [String: Any],
+        payment: [String: Any],
+        transaction: [String: Any],
+        products: [[String: Any]],
+        resolve: RCTPromiseResolveBlock,
+        reject: RCTPromiseRejectBlock
+    ) {
+        let cap: CartAwaitingPayment = self.tracker.ecommerce.cartAwaitingPayments.add()
+        _ = cap.cart.setProps(obj: cart)
+        _ = cap.shipping.setProps(obj: shipping)
+        _ = cap.payment.setProps(obj: payment)
+        _ = cap.transaction.setProps(obj: transaction)
+        
+        for product in products {
+            let eCommerceProduct = ECommerceProduct(obj:product)
+            cap.products.append(eCommerceProduct)
+        }
+        
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
+    @objc(salesTransactionConfirmation:withShipping:withPayment:withTransaction:withProducts:withResolver:withRejecter:)
+    func salesTransactionConfirmation(
+        cart: [String: Any],
+        shipping: [String: Any],
+        payment: [String: Any],
+        transaction: [String: Any],
+        products: [[String: Any]],
+        resolve: RCTPromiseResolveBlock,
+        reject: RCTPromiseRejectBlock
+    ) {
+        let tc: TransactionConfirmation = self.tracker.ecommerce.transactionConfirmations.add()
+        _ = tc.cart.setProps(obj: cart)
+        _ = tc.shipping.setProps(obj: shipping)
+        _ = tc.payment.setProps(obj: payment)
+        _ = tc.transaction.setProps(obj: transaction)
+        
+        for product in products {
+            let eCommerceProduct = ECommerceProduct(obj:product)
+            tc.products.append(eCommerceProduct)
+        }
+        
+        self.tracker.dispatch()
+        resolve(true)
+    }
 
     func gesture(parameters: [String: Any]) throws -> Gesture {
         if parameters["name"] == nil {
