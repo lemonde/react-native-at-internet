@@ -1,126 +1,116 @@
+import 'react-native-gesture-handler';
+import 'react-native-url-polyfill/auto';
 import * as React from 'react';
-import { StyleSheet, View, Text, Switch } from 'react-native';
 import AtInternet from '@lemonde/react-native-at-internet';
-import { Picker } from '@react-native-picker/picker';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Store from './ECommerce/Store';
+import Cart from './ECommerce/Cart';
+import Privacy from './Privacy';
+import Debug from './Debug';
+import { Provider, useSelector } from 'react-redux';
+import configureStore, { RootState } from './store';
+import { ActivityIndicator } from 'react-native';
+
+const { store } = configureStore();
+const Tabs = createBottomTabNavigator();
 
 AtInternet.enableListeners();
 
-export default function App() {
-  const [optIn, setOptIn] = React.useState<boolean>();
-  const [currentVisitorMode, setVisitorMode] = React.useState<
-    'OptOut' | 'OptIn' | 'Exempt' | 'NoConsent' | 'None'
-  >();
-
-  React.useEffect(() => {
-    const listener = AtInternet.EventEmitter.addListener(
-      AtInternet.Events.buildDidEnd,
-      (e) => {
-        console.log(e.message);
-      }
-    );
-    return () => {
-      listener.remove();
-    };
-  }, []);
-
+function App() {
+  const [ready, setReady] = React.useState(false);
+  const debugLength = useSelector<RootState, number>((s) => s.debug.length);
   React.useEffect(() => {
     (async () => {
-      await AtInternet.Privacy.extendIncludeBuffer(
-        'Exempt',
-        'stc/device',
-        'ati',
-        'atc'
-      );
-      await AtInternet.Privacy.extendIncludeStorage(
-        'OptOut',
-        'Campaign',
-        'Crash'
-      );
-      setVisitorMode(await AtInternet.Privacy.getVisitorMode());
-      // https://webhook.site/#!/96f68232-3178-42ec-a9a7-9f8d1aabee62
       await AtInternet.setConfigString('log', 'www');
       await AtInternet.setConfigString('logSSL', 'www');
       await AtInternet.setConfigBoolean('secure', true);
-      await AtInternet.setConfigString('domain', 'webhook.site');
-      await AtInternet.setConfigString(
-        'pixelPath',
-        '/96f68232-3178-42ec-a9a7-9f8d1aabee62'
-      );
+      await AtInternet.setConfigString('domain', 'example.org');
+      await AtInternet.setConfigString('pixelPath', '/');
       await AtInternet.setConfigInteger('site', 123456);
       await AtInternet.setLevel2(1);
-      await AtInternet.setProp('x2', 'first custom param', true);
-      await AtInternet.setProp('x3', 'second custom param', true);
-      await AtInternet.setProp('x15', 'custom param (only next hit)', false);
-      await AtInternet.screen({
-        name: 'Page name',
-        chapter1: 'Chapter 1',
-        chapter2: 'Chapter 2',
-        chapter3: 'Chapter 3',
-        customObject: JSON.stringify({
-          custom: 'object',
-          with: { nested: 'properties' },
-        }),
+
+      await AtInternet.Privacy.setVisitorMode('OptIn');
+
+      AtInternet.EventEmitter.removeAllListeners(AtInternet.Events.sendDidEnd);
+      AtInternet.EventEmitter.addListener(AtInternet.Events.sendDidEnd, (e) => {
+        const url = new URL(e.message);
+        const params: { [key: string]: string } = {};
+
+        for (let [key, value] of url.searchParams.entries()) {
+          params[key] = value;
+        }
+
+        store.dispatch({
+          type: 'DEBUG',
+          payload: { url: url.href.replace(url.search, ''), params },
+        });
       });
+      setReady(true);
     })();
   }, []);
 
-  React.useEffect(() => {
-    currentVisitorMode &&
-      AtInternet.touch({
-        name: currentVisitorMode,
-        chapter1: 'Chapter 1',
-        chapter2: 'Chapter 2',
-        chapter3: 'Chapter 3',
-      });
-  }, [currentVisitorMode]);
-
   return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 20 }}>AT Internet Example</Text>
-      <Text>Toggle Opt-in/Opt-out</Text>
-      <Switch
-        value={optIn}
-        onValueChange={() => {
-          (async () => {
-            if (optIn) {
-              await AtInternet.Privacy.setVisitorOptout();
-              setOptIn(false);
-            } else {
-              await AtInternet.Privacy.setVisitorOptIn();
-              setOptIn(true);
-            }
-            setVisitorMode(await AtInternet.Privacy.getVisitorMode());
-          })();
-        }}
-      />
-      <Text>Current Visitor Mode: {currentVisitorMode}</Text>
-      <Picker
-        mode="dropdown"
-        style={{ height: 50, width: 150 }}
-        selectedValue={currentVisitorMode}
-        onValueChange={(
-          itemValue: 'OptOut' | 'OptIn' | 'Exempt' | 'NoConsent' | 'None'
-        ) => {
-          (async () => {
-            await AtInternet.Privacy.setVisitorMode(itemValue);
-            setVisitorMode(await AtInternet.Privacy.getVisitorMode());
-          })();
-        }}
-      >
-        <Picker.Item label="None" value="None" />
-        <Picker.Item label="Exempt" value="Exempt" />
-        <Picker.Item label="OptIn" value="OptIn" />
-        <Picker.Item label="OptOut" value="OptOut" />
-        <Picker.Item label="NoConsent" value="NoConsent" />
-      </Picker>
-    </View>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        {ready ? (
+          <NavigationContainer>
+            <Tabs.Navigator
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                  let iconName = 'alert-circle';
+
+                  if (route.name === 'Store') {
+                    iconName = focused ? 'basket' : 'basket-outline';
+                  } else if (route.name === 'Cart') {
+                    iconName = focused ? 'cart' : 'cart-outline';
+                  } else if (route.name === 'Privacy') {
+                    iconName = focused ? 'shield' : 'shield-outline';
+                  } else if (route.name === 'Debug') {
+                    iconName = focused ? 'code-slash' : 'code-slash-outline';
+                  }
+
+                  return <Ionicons name={iconName} size={size} color={color} />;
+                },
+              })}
+            >
+              <Tabs.Screen name="Store" component={Store} />
+              <Tabs.Screen
+                name="Cart"
+                component={Cart}
+                initialParams={{ screen: 'Home' }}
+              />
+              <Tabs.Screen name="Privacy" component={Privacy} />
+              <Tabs.Screen
+                name="Debug"
+                component={Debug}
+                options={{ tabBarBadge: debugLength }}
+              />
+            </Tabs.Navigator>
+          </NavigationContainer>
+        ) : (
+          <SafeAreaView
+            style={{
+              flex: 1,
+              alignContent: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#fff',
+            }}
+          >
+            <ActivityIndicator size="large" />
+          </SafeAreaView>
+        )}
+      </SafeAreaProvider>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function Wrapper() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
