@@ -210,25 +210,23 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
     @ReactMethod
     fun setPrivacyVisitorOptout(promise: Promise) {
         Privacy.setVisitorOptOut()
-        promise.resolve(true)
+        promise.resolve(Privacy.getVisitorModeString())
     }
 
     @ReactMethod
     fun setPrivacyVisitorOptin(promise: Promise) {
         Privacy.setVisitorOptIn()
-        promise.resolve(true)
+        promise.resolve(Privacy.getVisitorModeString())
     }
 
     @ReactMethod
     fun setPrivacyVisitorMode(mode: String, parameters: ReadableMap, promise: Promise) {
-        var visitorMode: Privacy.VisitorMode? = null
-
-        when (mode) {
-            "OptIn" -> visitorMode = Privacy.VisitorMode.OptIn
-            "OptOut" -> visitorMode = Privacy.VisitorMode.OptOut
-            "Exempt" -> visitorMode = Privacy.VisitorMode.Exempt
-            "NoConsent" -> visitorMode = Privacy.VisitorMode.NoConsent
-            "None" -> visitorMode = Privacy.VisitorMode.None
+        val visitorMode: Privacy.VisitorMode = when (mode) {
+            "OptIn" -> Privacy.VisitorMode.OptIn
+            "OptOut" -> Privacy.VisitorMode.OptOut
+            "Exempt" -> Privacy.VisitorMode.Exempt
+            "NoConsent" -> Privacy.VisitorMode.NoConsent
+            "None" -> Privacy.VisitorMode.None
             else -> {
                 promise.reject("INVALID_PRIVACY_MODE", "Invalid privacy mode $mode (could be OptIn, OptOut, Exempt, NoConsent or None)")
                 return
@@ -263,7 +261,7 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
             )
         }
 
-        promise.resolve(true)
+        promise.resolve(Privacy.getVisitorModeString())
     }
 
     @ReactMethod
@@ -287,9 +285,7 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
         val privacyFeatures = ArrayList<Privacy.StorageFeature>()
 
         while (i < featuresDynamic.asArray().size()) {
-            val value = featuresDynamic.asArray().getString(i)
-
-            when (value) {
+            when (featuresDynamic.asArray().getString(i)) {
                 "Campaign" -> privacyFeatures.add(Privacy.StorageFeature.Campaign)
                 "Crash" -> privacyFeatures.add(Privacy.StorageFeature.Crash)
                 "IdentifiedVisitor" -> privacyFeatures.add(Privacy.StorageFeature.IdentifiedVisitor)

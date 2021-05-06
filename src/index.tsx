@@ -89,6 +89,7 @@ enum ePrivacyStorageFeature {
 }
 
 type AtInternetType = {
+  // START Configuration native methods
   setLevel2(level2: number): Promise<true>;
   setConfigString(key: string, value: string | null): Promise<true>;
   setConfigBoolean(key: string, value: boolean | null): Promise<true>;
@@ -101,10 +102,14 @@ type AtInternetType = {
   setParamDouble(key: string, value: number | null): Promise<true>;
 
   setProp(key: string, value: string, persistent: boolean): Promise<true>;
+  // END Configuration native methods
 
+  // START Visitor native methods
   visitor(visitorId: string, visitorCategory: string | null): Promise<true>;
   unsetVisitor(): Promise<true>;
+  // END Visitor native methods
 
+  // START Events native methods
   screen(parameters: HitParameters): Promise<true>;
   navigation(parameters: HitParameters): Promise<true>;
   download(parameters: HitParameters): Promise<true>;
@@ -112,8 +117,9 @@ type AtInternetType = {
   touch(parameters: HitParameters): Promise<true>;
   search(parameters: HitParameters): Promise<true>;
 
-  setPrivacyVisitorOptout(): Promise<true>;
-  setPrivacyVisitorOptin(): Promise<true>;
+  // START Privacy native methods
+  setPrivacyVisitorOptout(): Promise<PrivacyVisitorMode>;
+  setPrivacyVisitorOptin(): Promise<PrivacyVisitorMode>;
   setPrivacyVisitorMode(
     mode: string,
     parameters:
@@ -123,7 +129,7 @@ type AtInternetType = {
           visitorConsent: boolean;
           customUserIdValue?: string;
         }
-  ): Promise<true>;
+  ): Promise<PrivacyVisitorMode>;
   getPrivacyVisitorMode(): Promise<PrivacyVisitorMode>;
   extendIncludeBuffer(
     mode: PrivacyVisitorMode | string,
@@ -140,8 +146,8 @@ type AtInternetType = {
   Privacy: {
     VisitorMode: typeof ePrivacyVisitorMode;
     StorageFeature: typeof ePrivacyStorageFeature;
-    setVisitorOptout(): Promise<true>;
-    setVisitorOptIn(): Promise<true>;
+    setVisitorOptout(): Promise<PrivacyVisitorMode>;
+    setVisitorOptIn(): Promise<PrivacyVisitorMode>;
     setVisitorMode(
       mode: string,
       parameters?:
@@ -151,7 +157,7 @@ type AtInternetType = {
             visitorConsent: boolean;
             customUserIdValue?: string;
           }
-    ): Promise<true>;
+    ): Promise<PrivacyVisitorMode>;
     getVisitorMode(): Promise<PrivacyVisitorMode>;
     extendIncludeBuffer(mode: string, ...keys: string[]): Promise<true>;
     extendIncludeStorage(
@@ -190,8 +196,16 @@ Module.Events = Events;
 Module.Privacy = {
   VisitorMode: ePrivacyVisitorMode,
   StorageFeature: ePrivacyStorageFeature,
-  setVisitorOptout: AtInternet.setPrivacyVisitorOptout,
-  setVisitorOptIn: AtInternet.setPrivacyVisitorOptin,
+  setVisitorOptout: async () => {
+    const newMode = await AtInternet.setPrivacyVisitorOptout();
+    return (newMode.charAt(0).toUpperCase() +
+      newMode.slice(1)) as PrivacyVisitorMode;
+  },
+  setVisitorOptIn: async () => {
+    const newMode = await AtInternet.setPrivacyVisitorOptin();
+    return (newMode.charAt(0).toUpperCase() +
+      newMode.slice(1)) as PrivacyVisitorMode;
+  },
   extendIncludeBuffer: (mode: PrivacyVisitorMode, ...keys) =>
     AtInternet.extendIncludeBuffer(
       sanitizeIOSMode(mode),
@@ -209,8 +223,14 @@ Module.Privacy = {
     const mode = await AtInternet.getPrivacyVisitorMode();
     return (mode.charAt(0).toUpperCase() + mode.slice(1)) as PrivacyVisitorMode;
   },
-  setVisitorMode: (mode, parameters = {}) =>
-    AtInternet.setPrivacyVisitorMode(mode, parameters),
+  setVisitorMode: async (mode, parameters = {}) => {
+    const newMode = await AtInternet.setPrivacyVisitorMode(
+      sanitizeIOSMode(mode),
+      parameters
+    );
+    return (newMode.charAt(0).toUpperCase() +
+      newMode.slice(1)) as PrivacyVisitorMode;
+  },
 };
 
 export default Module;
