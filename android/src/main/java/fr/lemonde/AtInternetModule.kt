@@ -10,6 +10,7 @@ import com.atinternet.tracker.SetConfigCallback
 import com.atinternet.tracker.Tracker
 import com.atinternet.tracker.TrackerListener
 import com.atinternet.tracker.Privacy
+import com.atinternet.tracker.ecommerce.objectproperties.ECommerceProduct
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Dynamic
 import com.facebook.react.bridge.Promise
@@ -39,7 +40,7 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
         tracker.setConfig(
             key,
             value,
-            SetConfigCallback() {
+            SetConfigCallback {
                 promise.resolve(true)
             }
         )
@@ -50,7 +51,7 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
         tracker.setConfig(
             key,
             value,
-            SetConfigCallback() {
+            SetConfigCallback {
                 promise.resolve(true)
             }
         )
@@ -61,7 +62,7 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
         tracker.setConfig(
             key,
             value,
-            SetConfigCallback() {
+            SetConfigCallback {
                 promise.resolve(true)
             }
         )
@@ -72,7 +73,7 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
         tracker.setConfig(
             key,
             value,
-            SetConfigCallback() {
+            SetConfigCallback {
                 promise.resolve(true)
             }
         )
@@ -300,7 +301,117 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
         promise.resolve(true)
     }
 
-    fun gesture(parameters: ReadableMap): Gesture {
+    @ReactMethod
+    fun salesProductsDisplay(products: Dynamic, promise: Promise) {
+        val dp = tracker.ECommerce().DisplayProducts().add()
+        var i = 0
+
+        while (i < products.asArray().size()) {
+            dp.Products().add(ECommerceProduct(products.asArray().getMap(i)?.toHashMap()))
+            i++
+        }
+
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesProductsDisplayPage(product: ReadableMap, promise: Promise) {
+        val dpp = tracker.ECommerce().DisplayPageProducts().add()
+        dpp.Product().props = product.toHashMap()
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesProductsAdd(cart: ReadableMap, product: ReadableMap, promise: Promise) {
+        val ap = tracker.ECommerce().AddProducts().add()
+        ap.Cart().set("id", cart.getString("id"))
+        ap.Product().props = product.toHashMap()
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesProductsRemove(cart: ReadableMap, product: ReadableMap, promise: Promise) {
+        val rp = tracker.ECommerce().RemoveProducts().add()
+        rp.Cart().set("id", cart.getString("id"))
+        rp.Product().props = product.toHashMap()
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesCartDisplay(cart: ReadableMap, promise: Promise) {
+        val dc = tracker.ECommerce().DisplayCarts().add()
+        dc.Cart().props = cart.toHashMap()
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesCartUpdate(cart: ReadableMap, promise: Promise) {
+        val uc = tracker.ECommerce().UpdateCarts().add()
+        uc.Cart().props = cart.toHashMap()
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesCartDelivery(cart: ReadableMap, shipping: ReadableMap, promise: Promise) {
+        val dc = tracker.ECommerce().DeliveryCheckouts().add()
+        dc.Cart().props = cart.toHashMap()
+        dc.Shipping().props = shipping.toHashMap()
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesCartPayment(cart: ReadableMap, shipping: ReadableMap, promise: Promise) {
+        val pc = tracker.ECommerce().PaymentCheckouts().add()
+        pc.Cart().props = cart.toHashMap()
+        pc.Shipping().props = shipping.toHashMap()
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesCartAwaitingPayments(cart: ReadableMap, shipping: ReadableMap, payment: ReadableMap, transaction: ReadableMap, products: Dynamic, promise: Promise) {
+        val cap = tracker.ECommerce().CartAwaitingPayments().add()
+        cap.Cart().props = cart.toHashMap()
+        cap.Shipping().props = shipping.toHashMap()
+        cap.Payment().props = payment.toHashMap()
+        cap.Transaction().props = transaction.toHashMap()
+        var i = 0
+
+        while (i < products.asArray().size()) {
+            cap.Products().add(ECommerceProduct(products.asArray().getMap(i)?.toHashMap()))
+            i++
+        }
+
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun salesTransactionConfirmation(cart: ReadableMap, shipping: ReadableMap, payment: ReadableMap, transaction: ReadableMap, products: Dynamic, promise: Promise) {
+        val tc = tracker.ECommerce().TransactionConfirmations().add()
+        tc.Cart().props = cart.toHashMap()
+        tc.Shipping().props = shipping.toHashMap()
+        tc.Payment().props = payment.toHashMap()
+        tc.Transaction().props = transaction.toHashMap()
+        var i = 0
+
+        while (i < products.asArray().size()) {
+            tc.Products().add(ECommerceProduct(products.asArray().getMap(i)?.toHashMap()))
+            i++
+        }
+
+        tracker.dispatch()
+        promise.resolve(true)
+    }
+
+    private fun gesture(parameters: ReadableMap): Gesture {
         if (!parameters.hasKey("name")) {
             throw Exception("Missing mandatory screen field \"name\"")
         }
