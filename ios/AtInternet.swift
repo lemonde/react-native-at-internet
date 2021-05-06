@@ -168,7 +168,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
             reject: RCTPromiseRejectBlock
     ) {
         Privacy.setVisitorOptOut();
-        resolve(true)
+        resolve(Privacy.getVisitorModeString())
     }
     
     @objc(setPrivacyVisitorOptin:withRejecter:)
@@ -177,7 +177,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
             reject: RCTPromiseRejectBlock
     ) {
         Privacy.setVisitorOptIn();
-        resolve(true)
+        resolve(Privacy.getVisitorModeString())
     }
     
     @objc(setPrivacyVisitorMode:withParameters:withResolver:withRejecter:)
@@ -213,7 +213,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
             Privacy.setVisitorMode(mode);
         }
         
-        resolve(true)
+        resolve(Privacy.getVisitorModeString())
     }
     
     @objc(getPrivacyVisitorMode:withRejecter:)
