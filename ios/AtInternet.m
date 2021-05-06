@@ -95,4 +95,55 @@ RCT_EXTERN_METHOD(extendIncludeStorage:(NSString)mode
                   withResolver:(RCTPromiseResolveBlock)resolve
                   withRejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(salesProductsDisplay:(NSArray)products
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesProductsAdd:(NSDictionary)cart
+                  withProduct:(NSDictionary)product
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesProductsRemove:(NSDictionary)cart
+                  withProduct:(NSDictionary)product
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesProductsDisplayPage:(NSDictionary)product
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesCartDisplay:(NSDictionary)cart
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesCartUpdate:(NSDictionary)cart
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesCartDelivery:(NSDictionary)cart
+                  withShipping:(NSDictionary)shipping
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesCartPayment:(NSDictionary)cart
+                  withShipping:(NSDictionary)shipping
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesCartAwaitingPayments:(NSDictionary)cart
+                  withShipping:(NSDictionary)shipping
+                  withPayment:(NSDictionary)payment
+                  withTransaction:(NSDictionary)transaction
+                  withProducts:(NSArray)products
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(salesTransactionConfirmation:(NSDictionary)cart
+                  withShipping:(NSDictionary)shipping
+                  withPayment:(NSDictionary)payment
+                  withTransaction:(NSDictionary)transaction
+                  withProducts:(NSArray)products
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
 @end
