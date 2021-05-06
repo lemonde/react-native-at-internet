@@ -120,7 +120,9 @@
           "trailingComma": "es5",
           "useTabs": false
         }
-      ]
+      ],
+      "react-native/no-inline-styles": "off",
+      "react-hooks/exhaustive-deps": "off"
     }
   },
   "eslintIgnore": [
