@@ -121,7 +121,9 @@ export default function Checkout() {
               {
                 mode: 'my payment mode',
               },
-              {},
+              {
+                id: `r-${Math.random() * 100}`,
+              },
               products.map((product_id) => {
                 const product = getProductById(product_id);
                 return {
