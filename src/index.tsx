@@ -115,6 +115,7 @@ export interface ECommerceCart {
   turnovertaxfree?: number;
   quantity?: number;
   nbdistinctproduct?: number;
+  creation_utc?: number;
 }
 
 export interface ECommerceShipping {
@@ -128,6 +129,8 @@ export interface ECommercePayment {
 }
 
 interface ECommerceTransaction {
+  id: string;
+  status?: string;
   promocode?: [string];
   firstpurchase?: boolean;
 }
