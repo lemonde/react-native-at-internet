@@ -1,6 +1,6 @@
 {
-  "name": "@lemonde/react-native-at-internet",
-  "version": "1.2.0",
+  "name": "@westdeutscherrundfunkkoeln/react-native-at-internet",
+  "version": "1.2.1",
   "description": "Implementation of AtInternet android &amp; ios packages",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -15,6 +15,7 @@
     "cpp",
     "react-native-at-internet.podspec",
     "!lib/typescript/example",
+    "!example",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
@@ -35,13 +36,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/lemonde/react-native-at-internet",
+  "repository": "https://github.com/WestdeutscherRundfunkKoeln/react-native-at-internet",
   "author": "Rodolphe Renaux <rrenaux@idobs.net> (https://github.com/lemonde)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lemonde/react-native-at-internet/issues"
+    "url": "https://github.com/WestdeutscherRundfunkKoeln/react-native-at-internet/issues"
   },
-  "homepage": "https://github.com/lemonde/react-native-at-internet#readme",
+  "homepage": "https://github.com/WestdeutscherRundfunkKoeln/react-native-at-internet#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/bob": "^0.16.2",
@@ -79,7 +80,6 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "yarn lint && yarn typescript"
     }
   },
