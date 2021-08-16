@@ -70,5 +70,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   name: { fontWeight: 'bold' },
-  code: { fontFamily: 'monospace' },
+  code: {},
 });
