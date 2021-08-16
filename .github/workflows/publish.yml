@@ -21,8 +21,7 @@ jobs:
       - run: yarn
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: yarn typecheck
-      - run: yarn lint
+      - run: yarn typescript
       - run: yarn version --patch
       - run: yarn publish
         env:
