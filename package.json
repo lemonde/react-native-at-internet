@@ -15,6 +15,7 @@
     "cpp",
     "react-native-at-internet.podspec",
     "!lib/typescript/example",
+    "!example",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
