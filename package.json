@@ -36,13 +36,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/lemonde/react-native-at-internet",
+  "repository": "https://github.com/WestdeutscherRundfunkKoeln/react-native-at-internet",
   "author": "Rodolphe Renaux <rrenaux@idobs.net> (https://github.com/lemonde)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lemonde/react-native-at-internet/issues"
+    "url": "https://github.com/WestdeutscherRundfunkKoeln/react-native-at-internet/issues"
   },
-  "homepage": "https://github.com/lemonde/react-native-at-internet#readme",
+  "homepage": "https://github.com/WestdeutscherRundfunkKoeln/react-native-at-internet#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/bob": "^0.16.2",
