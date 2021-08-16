@@ -121,6 +121,22 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         resolve(true)
     }
 
+    @objc(event:withResolver:withRejecter:)
+    func event(parameters: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        if parameters["name"] == nil {
+            reject(
+                    "MISSING_PARAMETER",
+                    "Missing mandatory event field \"name\"",
+                    AtInternetError.missingMandatoryField(field: "name")
+            )
+            return
+        }
+
+        _ = self.tracker.events.add(name: parameters["name"] as! String, data: parameters["data"] as! [String: String])
+        self.tracker.dispatch()
+        resolve(true)
+    }
+    
     @objc(screen:withResolver:withRejecter:)
     func screen(parameters: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         if parameters["name"] == nil {

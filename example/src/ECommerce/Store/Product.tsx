@@ -7,7 +7,6 @@ import * as React from 'react';
 import { Button, Card, Text } from 'react-native-elements';
 import AtInternet from '@lemonde/react-native-at-internet';
 import { View, StyleSheet } from 'react-native';
-import type { Product } from '../../constants';
 import { useSelector, useStore } from 'react-redux';
 import type { RootState, RootActions } from '../../store';
 import Dispatcher from '../../store/Dispatcher';
@@ -24,17 +23,20 @@ export default function ProductPage() {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (route.params?.item) {
-        const item = route.params.item as Product;
-        navigation.setOptions({ title: item.title });
-        AtInternet.screen({ name: item.title, chapter1: 'Product' });
-        AtInternet.SalesInsights.Products.displayPage({
-          id: item.id,
-          $: item.title,
-          pricetaxincluded: item.price,
-          stock: item.stock > 0,
-        });
-      }
+      // if (route.params?.item) {
+      //   const item = route.params.item as Product;
+      //   navigation.setOptions({ title: item.title });
+      //   AtInternet.screen({ name: item.title, chapter1: 'Product' });
+      //   AtInternet.SalesInsights.Products.displayPage({
+      //     id: item.id,
+      //     $: item.title,
+      //     pricetaxincluded: item.price,
+      //     stock: item.stock > 0,
+      //   });
+      // }
+
+      // @ts-ignore
+      AtInternet.event({ name: 'testEvent', data: { some: 'data' } });
     }, [route, navigation])
   );
 

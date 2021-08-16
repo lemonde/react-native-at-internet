@@ -1,18 +1,18 @@
-import 'react-native-gesture-handler';
-import 'react-native-url-polyfill/auto';
-import * as React from 'react';
 import AtInternet from '@lemonde/react-native-at-internet';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Store from './ECommerce/Store';
-import Cart from './ECommerce/Cart';
-import Privacy from './Privacy';
-import Debug from './Debug';
-import { Provider, useSelector } from 'react-redux';
-import configureStore, { RootState } from './store';
+import { NavigationContainer } from '@react-navigation/native';
+import * as React from 'react';
 import { ActivityIndicator } from 'react-native';
+import 'react-native-gesture-handler';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import 'react-native-url-polyfill/auto';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Provider, useSelector } from 'react-redux';
+import Debug from './Debug';
+import Cart from './ECommerce/Cart';
+import Store from './ECommerce/Store';
+import Privacy from './Privacy';
+import configureStore, { RootState } from './store';
 
 const { store } = configureStore();
 const Tabs = createBottomTabNavigator();
@@ -24,12 +24,12 @@ function App() {
   const debugLength = useSelector<RootState, number>((s) => s.debug.length);
   React.useEffect(() => {
     (async () => {
-      await AtInternet.setConfigString('log', 'www');
-      await AtInternet.setConfigString('logSSL', 'www');
+      await AtInternet.setConfigString('log', 'logc414');
+      await AtInternet.setConfigString('logSSL', 'logs1414');
       await AtInternet.setConfigBoolean('secure', true);
-      await AtInternet.setConfigString('domain', 'example.org');
+      await AtInternet.setConfigString('domain', 'xiti.com');
       await AtInternet.setConfigString('pixelPath', '/');
-      await AtInternet.setConfigInteger('site', 123456);
+      await AtInternet.setConfigInteger('site', 621455);
       await AtInternet.setLevel2(1);
 
       await AtInternet.Privacy.setVisitorMode('OptIn');
