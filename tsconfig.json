@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@lemonde/react-native-at-internet": ["./src/index"]
+      "@westdeutscherrundfunkkoeln/react-native-at-internet": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

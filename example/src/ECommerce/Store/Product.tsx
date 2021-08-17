@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/core';
 import * as React from 'react';
 import { Button, Card, Text } from 'react-native-elements';
-import AtInternet from '@lemonde/react-native-at-internet';
+import AtInternet from '@westdeutscherrundfunkkoeln/react-native-at-internet';
 import { View, StyleSheet } from 'react-native';
 import { useSelector, useStore } from 'react-redux';
 import type { RootState, RootActions } from '../../store';
@@ -36,7 +36,7 @@ export default function ProductPage() {
       // }
 
       // @ts-ignore
-      AtInternet.event({ name: 'testEvent', data: { some: 'data' } });
+      AtInternet.event({ name: 'test.event', data: { some: 'data_1' } });
     }, [route, navigation])
   );
 

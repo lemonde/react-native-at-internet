@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { StyleSheet, Switch, View, Modal } from 'react-native';
 import { Text, Button, Card } from 'react-native-elements';
-import AtInternet from '@lemonde/react-native-at-internet';
+import AtInternet from '@westdeutscherrundfunkkoeln/react-native-at-internet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();

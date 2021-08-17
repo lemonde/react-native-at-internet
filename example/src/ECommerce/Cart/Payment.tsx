@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Text } from 'react-native-elements';
-import AtInternet from '@lemonde/react-native-at-internet';
+import AtInternet from '@westdeutscherrundfunkkoeln/react-native-at-internet';
 import { useSelector } from 'react-redux';
 import { DATA } from '../../constants';
 import type { RootState } from '../../store';

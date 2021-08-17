@@ -1,4 +1,4 @@
-import AtInternet from '@lemonde/react-native-at-internet';
+import AtInternet from '@westdeutscherrundfunkkoeln/react-native-at-internet';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
@@ -48,6 +48,7 @@ function App() {
           payload: { url: url.href.replace(url.search, ''), params },
         });
       });
+
       setReady(true);
     })();
   }, []);

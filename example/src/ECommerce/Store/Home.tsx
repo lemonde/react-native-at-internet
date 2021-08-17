@@ -4,7 +4,7 @@ import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Text, Card } from 'react-native-elements';
 import AtInternet, {
   ECommerceProduct,
-} from '@lemonde/react-native-at-internet';
+} from '@westdeutscherrundfunkkoeln/react-native-at-internet';
 import type { Product } from '../../constants';
 import { DATA } from '../../constants';
 

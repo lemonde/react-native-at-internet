@@ -1,6 +1,6 @@
 import type { StoreType } from '.';
 import { DATA, Product } from '../constants';
-import AtInternet from '@lemonde/react-native-at-internet';
+import AtInternet from '@westdeutscherrundfunkkoeln/react-native-at-internet';
 
 export default class Dispatcher {
   public Cart: Cart;

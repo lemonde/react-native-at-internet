@@ -7,7 +7,7 @@ import { DATA } from '../../constants';
 import Dispatcher from '../../store/Dispatcher';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useFocusEffect, useNavigation } from '@react-navigation/core';
-import AtInternet from '@lemonde/react-native-at-internet';
+import AtInternet from '@westdeutscherrundfunkkoeln/react-native-at-internet';
 
 const getProductById = (product_id: string) => {
   return DATA.filter((product) => product.id === product_id)[0] || null;

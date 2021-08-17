@@ -1,11 +1,11 @@
-import { DATA } from '../../constants';
-import type { RootState } from '../../store';
+import { useFocusEffect, useNavigation } from '@react-navigation/core';
+import AtInternet from '@westdeutscherrundfunkkoeln/react-native-at-internet';
 import * as React from 'react';
 import { View } from 'react-native';
-import { Text, ListItem, Avatar, Button } from 'react-native-elements';
+import { Avatar, Button, ListItem, Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
-import { useFocusEffect, useNavigation } from '@react-navigation/core';
-import AtInternet from '@lemonde/react-native-at-internet';
+import { DATA } from '../../constants';
+import type { RootState } from '../../store';
 
 const getProductById = (product_id: string) => {
   return DATA.filter((product) => product.id === product_id)[0] || null;
