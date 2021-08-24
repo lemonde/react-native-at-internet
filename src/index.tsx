@@ -1,9 +1,9 @@
 import {
-  NativeModules,
-  NativeEventEmitter,
   EmitterSubscription,
-  NativeModulesStatic,
   EventSubscriptionVendor,
+  NativeEventEmitter,
+  NativeModules,
+  NativeModulesStatic,
   Platform,
 } from 'react-native';
 
@@ -135,6 +135,16 @@ interface ECommerceTransaction {
   firstpurchase?: boolean;
 }
 
+interface LifecycleMetrics {
+  dsfs: number;
+  dsls: number;
+  fs: number;
+  fsau: number;
+  fsd: number;
+  sc: number;
+  sessionId: string;
+}
+
 type AtInternetType = {
   // START Configuration native methods
   setLevel2(level2: number): Promise<true>;
@@ -156,7 +166,10 @@ type AtInternetType = {
   unsetVisitor(): Promise<true>;
   // END Visitor native methods
 
+  getLivecycleMetrics(): Promise<LifecycleMetrics>;
+
   // START Events native methods
+  event(parameters: Record<string, number | string | boolean>): Promise<true>;
   screen(parameters: HitParameters): Promise<true>;
   navigation(parameters: HitParameters): Promise<true>;
   download(parameters: HitParameters): Promise<true>;

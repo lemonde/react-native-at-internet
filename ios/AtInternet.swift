@@ -136,7 +136,14 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
+    @objc(getLivecycleMetrics:withRejecter:)
+    func event(resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let metrics = self.tracker.getLifecycleMetrics()
+        resolve(metrics)
+    }
+
+
     @objc(screen:withResolver:withRejecter:)
     func screen(parameters: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         if parameters["name"] == nil {
@@ -186,7 +193,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         Privacy.setVisitorOptOut();
         resolve(Privacy.getVisitorModeString())
     }
-    
+
     @objc(setPrivacyVisitorOptin:withRejecter:)
     func setPrivacyVisitorOptin(
             resolve: RCTPromiseResolveBlock,
@@ -195,7 +202,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         Privacy.setVisitorOptIn();
         resolve(Privacy.getVisitorModeString())
     }
-    
+
     @objc(setPrivacyVisitorMode:withParameters:withResolver:withRejecter:)
     func setPrivacyVisitorMode(
             mode: String,
@@ -228,10 +235,10 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         } else {
             Privacy.setVisitorMode(mode);
         }
-        
+
         resolve(Privacy.getVisitorModeString())
     }
-    
+
     @objc(getPrivacyVisitorMode:withRejecter:)
     func getPrivacyVisitorMode(
             resolve: RCTPromiseResolveBlock,
@@ -239,7 +246,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
     ) {
         resolve(Privacy.getVisitorModeString())
     }
-    
+
     @objc(extendIncludeBuffer:withKeys:withResolver:withRejecter:)
     func extendIncludeBuffer(
             mode: String,
@@ -250,7 +257,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         Privacy.extendIncludeBuffer(mode, keys: keys)
         resolve(true)
     }
-    
+
     @objc(extendIncludeStorage:withFeatures:withResolver:withRejecter:)
     func extendIncludeStorage(
             mode: String,
@@ -261,20 +268,20 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         Privacy.extendIncludeStorage(mode, storageFeatureKeys: features);
         resolve(true)
     }
-    
+
     @objc(salesProductsDisplay:withResolver:withRejecter:)
     func salesProductsDisplay(products: [[String: Any]], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let dp: DisplayProduct = self.tracker.ecommerce.displayProducts.add()
-        
+
         for product in products {
             let eCommerceProduct = ECommerceProduct(obj:product)
             dp.products.append(eCommerceProduct)
         }
-        
+
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesProductsDisplayPage:withResolver:withRejecter:)
     func salesProductsDisplayPage(product: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let dpp: DisplayPageProduct = self.tracker.ecommerce.displayPageProducts.add()
@@ -282,7 +289,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesProductsAdd:withProduct:withResolver:withRejecter:)
     func salesProductsAdd(cart: [String: Any], product: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let ap: AddProduct = self.tracker.ecommerce.addProducts.add()
@@ -291,7 +298,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesProductsRemove:withProduct:withResolver:withRejecter:)
     func salesProductsRemove(cart: [String: Any], product: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let rp: RemoveProduct = self.tracker.ecommerce.removeProducts.add()
@@ -300,7 +307,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesCartDisplay:withResolver:withRejecter:)
     func salesCartDisplay(cart: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let dc: DisplayCart = self.tracker.ecommerce.displayCarts.add()
@@ -308,7 +315,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesCartUpdate:withResolver:withRejecter:)
     func salesCartUpdate(cart: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let uc: UpdateCart = self.tracker.ecommerce.updateCarts.add()
@@ -316,7 +323,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesCartDelivery:withShipping:withResolver:withRejecter:)
     func salesCartDelivery(cart: [String: Any], shipping: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let dc: DeliveryCheckout = self.tracker.ecommerce.deliveryCheckouts.add()
@@ -325,7 +332,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesCartPayment:withShipping:withResolver:withRejecter:)
     func salesCartPayment(cart: [String: Any], shipping: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let pc: PaymentCheckout = self.tracker.ecommerce.paymentCheckouts.add()
@@ -334,7 +341,7 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesCartAwaitingPayments:withShipping:withPayment:withTransaction:withProducts:withResolver:withRejecter:)
     func salesCartAwaitingPayments(
         cart: [String: Any],
@@ -350,16 +357,16 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         _ = cap.shipping.setProps(obj: shipping)
         _ = cap.payment.setProps(obj: payment)
         _ = cap.transaction.setProps(obj: transaction)
-        
+
         for product in products {
             let eCommerceProduct = ECommerceProduct(obj:product)
             cap.products.append(eCommerceProduct)
         }
-        
+
         self.tracker.dispatch()
         resolve(true)
     }
-    
+
     @objc(salesTransactionConfirmation:withShipping:withPayment:withTransaction:withProducts:withResolver:withRejecter:)
     func salesTransactionConfirmation(
         cart: [String: Any],
@@ -375,12 +382,12 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
         _ = tc.shipping.setProps(obj: shipping)
         _ = tc.payment.setProps(obj: payment)
         _ = tc.transaction.setProps(obj: transaction)
-        
+
         for product in products {
             let eCommerceProduct = ECommerceProduct(obj:product)
             tc.products.append(eCommerceProduct)
         }
-        
+
         self.tracker.dispatch()
         resolve(true)
     }

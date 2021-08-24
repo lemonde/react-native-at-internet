@@ -1,8 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
-import { StyleSheet, Switch, View, Modal } from 'react-native';
-import { Text, Button, Card } from 'react-native-elements';
 import AtInternet from '@westdeutscherrundfunkkoeln/react-native-at-internet';
+import React from 'react';
+import { Modal, StyleSheet, Switch, View } from 'react-native';
+import { Button, Card, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
@@ -108,6 +108,17 @@ export default function Privacy() {
                 <Button
                   title="Change mode manually"
                   onPress={() => setModalVisible(true)}
+                />
+              </View>
+
+              <View style={styles.Row}>
+                <Button
+                  title="Test Metrics"
+                  onPress={async () => {
+                    const metrics = await AtInternet.getLivecycleMetrics();
+
+                    console.log({ metrics });
+                  }}
                 />
               </View>
             </View>
