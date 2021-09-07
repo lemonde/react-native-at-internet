@@ -12,7 +12,7 @@ import Privacy from './Privacy';
 import Debug from './Debug';
 import { Provider, useSelector } from 'react-redux';
 import configureStore, { RootState } from './store';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Platform } from 'react-native';
 
 const { store } = configureStore();
 const Tabs = createBottomTabNavigator();
@@ -35,6 +35,9 @@ function App() {
       await AtInternet.Privacy.setVisitorMode('OptIn');
 
       AtInternet.EventEmitter.removeAllListeners(AtInternet.Events.sendDidEnd);
+      AtInternet.EventEmitter.removeAllListeners(
+        AtInternet.Events.errorDidOccur
+      );
       AtInternet.EventEmitter.addListener(AtInternet.Events.sendDidEnd, (e) => {
         const url = new URL(e.message);
         const params: { [key: string]: string } = {};
@@ -48,6 +51,12 @@ function App() {
           payload: { url: url.href.replace(url.search, ''), params },
         });
       });
+      AtInternet.EventEmitter.addListener(
+        AtInternet.Events.errorDidOccur,
+        console.warn
+      );
+
+      console.log('visitor_id', Platform.OS, await AtInternet.getUserId());
       setReady(true);
     })();
   }, []);

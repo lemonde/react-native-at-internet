@@ -3,23 +3,11 @@
 package fr.lemonde
 
 import androidx.annotation.Nullable
-import com.atinternet.tracker.ATInternet
-import com.atinternet.tracker.Gesture
-import com.atinternet.tracker.Screen
-import com.atinternet.tracker.SetConfigCallback
-import com.atinternet.tracker.Tracker
-import com.atinternet.tracker.TrackerListener
-import com.atinternet.tracker.Privacy
+import com.atinternet.tracker.*
 import com.atinternet.tracker.ecommerce.objectproperties.ECommerceProduct
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.Dynamic
-import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.bridge.WritableMap
+import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
+
 
 class AtInternetModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext), TrackerListener {
 
@@ -117,6 +105,13 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
             tracker.IdentifiedVisitor().set(visitorId.asString(), visitorCategory.asString())
 
         promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun getUserId(promise: Promise) {
+        tracker.getUserId { id ->
+            promise.resolve(id)
+        }
     }
 
     @ReactMethod

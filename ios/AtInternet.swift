@@ -457,6 +457,11 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
             reject("MISSING_PARAMETER", "Missing mandatory screen field \"name\"", error)
         }
     }
+    
+    @objc(getUserId:withRejecter:)
+    func getUserId(resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        resolve(self.tracker.getUserId())
+    }
 
     @objc(visitor:withCategory:withResolver:withRejecter:)
     func visitor(
@@ -475,6 +480,8 @@ class AtInternet: RCTEventEmitter, TrackerDelegate {
 
         resolve(true)
     }
+    
+    
 
     @objc(unsetVisitor:withRejecter:)
     func unsetVisitor(resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {

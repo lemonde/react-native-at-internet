@@ -34,6 +34,7 @@ class Cart {
           $: product.title,
           pricetaxincluded: product.price,
           stock: product.stock > 0,
+          quantity: 1,
         }
       );
       await AtInternet.SalesInsights.Cart.update({
@@ -67,13 +68,14 @@ class Cart {
     });
 
     (async () => {
-      AtInternet.SalesInsights.Products.add(
+      AtInternet.SalesInsights.Products.remove(
         { id: cart_id },
         {
           id: product.id,
           $: product.title,
           pricetaxincluded: product.price,
           stock: product.stock > 0,
+          quantity: 1,
         }
       );
       AtInternet.SalesInsights.Cart.update({
