@@ -154,6 +154,7 @@ type AtInternetType = {
   // START Visitor native methods
   visitor(visitorId: string, visitorCategory: string | null): Promise<true>;
   unsetVisitor(): Promise<true>;
+  getUserId(): Promise<string>;
   // END Visitor native methods
 
   // START Events native methods
