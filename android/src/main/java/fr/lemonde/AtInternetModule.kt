@@ -418,7 +418,7 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
             gesture.chapter1 = parameters.getString("chapter1")
 
         if (parameters.hasKey("chapter2"))
-            gesture.chapter2 = parameters.getString("chapter1")
+            gesture.chapter2 = parameters.getString("chapter2")
 
         if (parameters.hasKey("chapter3"))
             gesture.chapter3 = parameters.getString("chapter3")
