@@ -31,6 +31,10 @@ RCT_EXTERN_METHOD(search:(NSDictionary)parameters
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(event:(NSDictionary)parameters
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+
 RCT_EXTERN_METHOD(setConfigString:(NSString)key
                  withValue:(NSString)value
                  withResolver:(RCTPromiseResolveBlock)resolve
@@ -56,6 +60,9 @@ RCT_EXTERN_METHOD(setConfigInteger:(NSString)key
                  withValue:(NSInteger)value
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(getSessionId:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(visitor:(NSString)visitorId
                  withCategory:(NSString)visitorCategory

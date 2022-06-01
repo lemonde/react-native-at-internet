@@ -16,6 +16,11 @@ interface HitParameters {
   customObject?: string;
 }
 
+export interface EventParameters {
+  data: { [key: string]: string | number | boolean };
+  name: string;
+}
+
 export enum Events {
   trackerNeedsFirstLaunchApproval = 'trackerNeedsFirstLaunchApproval',
   buildDidEnd = 'buildDidEnd',
@@ -155,6 +160,7 @@ type AtInternetType = {
   visitor(visitorId: string, visitorCategory: string | null): Promise<true>;
   unsetVisitor(): Promise<true>;
   getUserId(): Promise<string>;
+  getSessionId(): Promise<string>;
   // END Visitor native methods
 
   // START Events native methods
@@ -164,6 +170,7 @@ type AtInternetType = {
   exit(parameters: HitParameters): Promise<true>;
   touch(parameters: HitParameters): Promise<true>;
   search(parameters: HitParameters): Promise<true>;
+  event(parameters: EventParameters): Promise<true>;
   // END Events native methods
 
   // START Privacy native methods

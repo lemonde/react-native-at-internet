@@ -98,6 +98,12 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
     }
 
     @ReactMethod
+    fun getSessionId(promise: Promise) {
+        val sessionId = tracker.lifecycleMetrics["sessionId"]
+        promise.resolve(sessionId)
+    }
+
+    @ReactMethod
     fun visitor(visitorId: Dynamic, visitorCategory: Dynamic, promise: Promise) {
         if (visitorCategory.isNull)
             tracker.IdentifiedVisitor().set(visitorId.asString())
@@ -146,6 +152,22 @@ class AtInternetModule(private val reactContext: ReactApplicationContext) : Reac
 
         screen.sendView()
         promise.resolve(true)
+    }
+
+    @ReactMethod
+    fun event(parameters: ReadableMap, promise: Promise) {
+        if (!parameters.hasKey("name")) {
+            promise.reject(Exception("Missing mandatory screen field \"name\""))
+        }
+
+        try {
+            val eventData = parameters?.getMap("data")?.toHashMap()
+            val event = tracker.Events().add(parameters.getString("name"), eventData)
+            tracker.dispatch()
+            promise.resolve(true)
+        } catch (e: Throwable) {
+            promise.reject(e)
+        }
     }
 
     @ReactMethod

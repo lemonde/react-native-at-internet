@@ -110,6 +110,16 @@ export default function Privacy() {
                   onPress={() => setModalVisible(true)}
                 />
               </View>
+
+              <View style={styles.Row}>
+                <Button
+                  title="Test SessionId"
+                  onPress={async () => {
+                    const sessionId = await AtInternet.getSessionId();
+                    console.log({ sessionId });
+                  }}
+                />
+              </View>
             </View>
           );
         }}

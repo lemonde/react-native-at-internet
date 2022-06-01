@@ -2,7 +2,10 @@ import 'react-native-gesture-handler';
 import 'react-native-url-polyfill/auto';
 import * as React from 'react';
 import AtInternet from '@lemonde/react-native-at-internet';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  NavigationContainerRef,
+} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,6 +16,7 @@ import Debug from './Debug';
 import { Provider, useSelector } from 'react-redux';
 import configureStore, { RootState } from './store';
 import { ActivityIndicator, Platform } from 'react-native';
+import { useRef } from 'react';
 
 const { store } = configureStore();
 const Tabs = createBottomTabNavigator();
@@ -21,6 +25,8 @@ AtInternet.enableListeners();
 
 function App() {
   const [ready, setReady] = React.useState(false);
+  const navigationRef = useRef<NavigationContainerRef>();
+  const routeNameRef = useRef<string>();
   const debugLength = useSelector<RootState, number>((s) => s.debug.length);
   React.useEffect(() => {
     (async () => {
@@ -65,7 +71,26 @@ function App() {
     <Provider store={store}>
       <SafeAreaProvider>
         {ready ? (
-          <NavigationContainer>
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={() => {
+              routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+            }}
+            onStateChange={async () => {
+              const previousRouteName = routeNameRef.current;
+              const currentRouteName = navigationRef.current.getCurrentRoute()
+                .name;
+
+              if (previousRouteName !== currentRouteName) {
+                AtInternet.event({
+                  name: 'react_navigation_state_changed',
+                  data: { route: currentRouteName },
+                });
+              }
+
+              routeNameRef.current = currentRouteName;
+            }}
+          >
             <Tabs.Navigator
               screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
