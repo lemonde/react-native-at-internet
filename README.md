@@ -4,7 +4,6 @@
 
 [![GitHub license](https://img.shields.io/github/license/lemonde/react-native-at-internet)](https://github.com/lemonde/react-native-at-internet/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/lemonde/react-native-at-internet)](https://github.com/lemonde/react-native-at-internet/stargazers)
-![Travis (.com)](https://img.shields.io/travis/com/lemonde/react-native-at-internet)
 ![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=lemonde.react-native-at-internet)
 
 Implementation of ATInternet Android & iOS packages
@@ -21,6 +20,11 @@ it does not implement all methods nor functionalities of native modules,
 feel free to **open a pull request** and complete this.
 
 ### Installation
+
+> You need to add configuration for [GitHub's NPM package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) and this repository by adding this rule to your `~/.npmrc` :
+> ```
+> @lemonde:registry=https://npm.pkg.github.com/
+> ```
 
 ```sh
 npm install @lemonde/react-native-at-internet
